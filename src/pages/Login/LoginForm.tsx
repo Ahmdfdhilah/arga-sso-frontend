@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router';
+import { useNavigate, Link } from 'react-router';
 import { FcGoogle } from 'react-icons/fc';
 import { HiMail, HiLockClosed, HiEye, HiEyeOff } from 'react-icons/hi';
 import { Loader2 } from 'lucide-react';
@@ -156,13 +156,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ className }) => {
 
         <p className="mt-6 text-center text-sm text-muted-foreground">
           Dengan masuk, Anda menyetujui{' '}
-          <a href="#" className="text-primary hover:text-primary/80 font-medium">
-            Syarat Layanan
-          </a>{' '}
-          dan{' '}
-          <a href="#" className="text-primary hover:text-primary/80 font-medium">
+          <Link to="/privacy-policy" className="text-primary hover:text-primary/80 font-medium">
             Kebijakan Privasi
-          </a>
+          </Link>
         </p>
       </div>
 
