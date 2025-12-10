@@ -53,20 +53,20 @@ const LoginForm: React.FC<LoginFormProps> = ({ className }) => {
 
   return (
     <div className={cn('w-full max-w-md mx-auto', className)}>
-      <div className="bg-white border border-gray-200 rounded-2xl p-8 shadow-xl shadow-gray-200/50">
+      <div className="bg-background border border-border rounded-2xl p-8 shadow-xl">
         <div className="space-y-2 text-center mb-8">
           <div className="lg:hidden flex justify-center mb-4">
             <img src={logoKecil} alt="Arga Bumi Indonesia" className="h-14 w-auto" />
           </div>
-          <h2 className="text-2xl font-bold text-gray-900">Selamat Datang</h2>
-          <p className="text-gray-500">Masuk ke akun Anda untuk melanjutkan</p>
+          <h2 className="text-2xl font-bold text-card-foreground">Selamat Datang</h2>
+          <p className="text-muted-foreground">Masuk ke akun Anda untuk melanjutkan</p>
         </div>
 
         <form onSubmit={handleEmailLogin} className="space-y-5">
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-gray-700 font-medium">Email</Label>
+            <Label htmlFor="email" className="text-foreground font-medium">Email</Label>
             <div className="relative">
-              <HiMail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <HiMail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
                 id="email"
                 type="email"
@@ -74,16 +74,16 @@ const LoginForm: React.FC<LoginFormProps> = ({ className }) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={isLoading}
-                className="pl-10 h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-emerald-500 focus:ring-emerald-500"
+                className="pl-10 h-12"
                 required
               />
             </div>
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="password" className="text-gray-700 font-medium">Password</Label>
+            <Label htmlFor="password" className="text-foreground font-medium">Password</Label>
             <div className="relative">
-              <HiLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400" />
+              <HiLockClosed className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
               <Input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
@@ -91,14 +91,14 @@ const LoginForm: React.FC<LoginFormProps> = ({ className }) => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={isLoading}
-                className="pl-10 pr-10 h-12 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 focus:bg-white focus:border-emerald-500 focus:ring-emerald-500"
+                className="pl-10 pr-10 h-12"
                 required
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
                 disabled={isLoading}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors"
               >
                 {showPassword ? (
                   <HiEyeOff className="h-5 w-5" />
@@ -112,7 +112,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ className }) => {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full h-12 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold shadow-lg shadow-emerald-500/25 transition-all"
+            className="w-full h-12 font-semibold shadow-lg"
           >
             {loginMutation.isPending ? (
               <>
@@ -127,10 +127,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ className }) => {
 
         <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t border-gray-200" />
+            <span className="w-full border-t border-border" />
           </div>
           <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-white px-3 text-gray-400 font-medium">atau lanjutkan dengan</span>
+            <span className="bg-background px-3 text-muted-foreground font-medium">atau lanjutkan dengan</span>
           </div>
         </div>
 
@@ -139,7 +139,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ className }) => {
           variant="outline"
           onClick={handleGoogleLogin}
           disabled={isLoading}
-          className="w-full h-12 bg-white border-gray-200 text-gray-700 hover:bg-gray-50 font-medium"
+          className="w-full h-12 font-medium"
         >
           {googleLoading ? (
             <>
@@ -154,19 +154,19 @@ const LoginForm: React.FC<LoginFormProps> = ({ className }) => {
           )}
         </Button>
 
-        <p className="mt-6 text-center text-sm text-gray-500">
+        <p className="mt-6 text-center text-sm text-muted-foreground">
           Dengan masuk, Anda menyetujui{' '}
-          <a href="#" className="text-emerald-600 hover:text-emerald-700 font-medium">
+          <a href="#" className="text-primary hover:text-primary/80 font-medium">
             Syarat Layanan
           </a>{' '}
           dan{' '}
-          <a href="#" className="text-emerald-600 hover:text-emerald-700 font-medium">
+          <a href="#" className="text-primary hover:text-primary/80 font-medium">
             Kebijakan Privasi
           </a>
         </p>
       </div>
 
-      <p className="mt-6 text-center text-sm text-gray-400 lg:hidden">
+      <p className="mt-6 text-center text-sm text-muted-foreground lg:hidden">
         © 2024 Arga Bumi Indonesia
       </p>
     </div>

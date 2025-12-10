@@ -25,11 +25,11 @@ const LoginBranding: React.FC<LoginBrandingProps> = ({ className }) => {
           <h2 className="text-4xl xl:text-5xl font-bold leading-tight">
             Akses semua layanan
             <br />
-            <span className="text-emerald-200">
+            <span className="text-secondary">
               dalam satu login
             </span>
           </h2>
-          <p className="text-white/80 text-lg xl:text-xl">
+          <p className="text-primary-foreground/80 text-lg xl:text-xl">
             Masuk sekali untuk mengakses seluruh aplikasi dan layanan Arga Bumi Indonesia.
           </p>
         </div>
@@ -37,17 +37,17 @@ const LoginBranding: React.FC<LoginBrandingProps> = ({ className }) => {
         <div className="space-y-4">
           {features.map((feature, index) => (
             <div key={index} className="flex items-center gap-4">
-              <div className="h-7 w-7 rounded-full bg-emerald-400/20 flex items-center justify-center flex-shrink-0">
-                <HiCheck className="h-4 w-4 text-emerald-300" />
+              <div className="h-7 w-7 rounded-full bg-secondary flex items-center justify-center flex-shrink-0">
+                <HiCheck className="h-4 w-4 text-background" />
               </div>
-              <span className="text-white/90 text-lg">{feature}</span>
+              <span className="text-background text-lg">{feature}</span>
             </div>
           ))}
         </div>
       </div>
 
       <div className="absolute bottom-8 left-12 xl:left-20">
-        <p className="text-sm text-white/50">
+        <p className="text-sm text-primary-foreground/50">
           © 2024 Arga Bumi Indonesia. All rights reserved.
         </p>
       </div>
