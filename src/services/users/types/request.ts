@@ -5,6 +5,11 @@ export interface UserCreateRequest {
   email?: string;
   phone?: string;
   avatar_path?: string;
+  alias?: string;
+  gender?: string;
+  date_of_birth?: string;
+  address?: string;
+  bio?: string;
   role?: UserRole;
   status?: UserStatus;
 }
@@ -14,6 +19,11 @@ export interface UserUpdateRequest {
   email?: string;
   phone?: string;
   avatar_path?: string;
+  alias?: string;
+  gender?: string;
+  date_of_birth?: string;
+  address?: string;
+  bio?: string;
   role?: UserRole;
   status?: UserStatus;
 }

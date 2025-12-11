@@ -7,6 +7,13 @@ export interface UserListItemResponse {
   email?: string;
   phone?: string;
   avatar_url?: string;
+  // Extended profile
+  alias?: string;
+  gender?: string;
+  date_of_birth?: string;
+  address?: string;
+  bio?: string;
+  // System fields
   status: UserStatus;
   role: UserRole;
   created_at: string;
@@ -18,6 +25,13 @@ export interface UserResponse {
   email?: string;
   phone?: string;
   avatar_url?: string;
+  // Extended profile
+  alias?: string;
+  gender?: string;
+  date_of_birth?: string;
+  address?: string;
+  bio?: string;
+  // System fields
   status: UserStatus;
   role: UserRole;
   created_at: string;

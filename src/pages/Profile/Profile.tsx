@@ -1,14 +1,16 @@
 import { useEffect, useState, useRef } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { Loader2, AlertCircle, User, Mail, Phone, Camera, Eye } from 'lucide-react';
+import { Loader2, AlertCircle, User, Mail, Phone, Camera, Eye, UserCircle, Calendar, MapPin, FileText } from 'lucide-react';
 import { toast } from 'sonner';
 import { MainLayout } from '@/components/layouts';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
     Dialog,
@@ -26,6 +28,11 @@ const profileSchema = z.object({
     name: z.string().min(1, 'Nama harus diisi'),
     email: z.string().email('Format email tidak valid').optional().or(z.literal('')),
     phone: z.string().optional(),
+    alias: z.string().optional(),
+    gender: z.string().optional(),
+    date_of_birth: z.string().optional(),
+    address: z.string().optional(),
+    bio: z.string().max(1000, 'Bio maksimal 1000 karakter').optional(),
 });
 
 type ProfileFormData = z.infer<typeof profileSchema>;
@@ -47,6 +54,7 @@ export function Profile() {
         register,
         handleSubmit,
         reset,
+        control,
         formState: { errors },
     } = useForm<ProfileFormData>({
         resolver: zodResolver(profileSchema),
@@ -69,6 +77,11 @@ export function Profile() {
                     name: response.data.name,
                     email: response.data.email || '',
                     phone: response.data.phone || '',
+                    alias: response.data.alias || '',
+                    gender: response.data.gender || '',
+                    date_of_birth: response.data.date_of_birth ? response.data.date_of_birth.split('T')[0] : '',
+                    address: response.data.address || '',
+                    bio: response.data.bio || '',
                 });
             }
         } catch (err) {
@@ -167,7 +180,15 @@ export function Profile() {
         try {
             setIsSubmitting(true);
             setShowFormConfirmDialog(false);
-            const response = await usersService.updateMyProfile({ name: pendingFormData.name });
+            const response = await usersService.updateMyProfile({
+                name: pendingFormData.name,
+                phone: pendingFormData.phone,
+                alias: pendingFormData.alias,
+                gender: pendingFormData.gender,
+                date_of_birth: pendingFormData.date_of_birth,
+                address: pendingFormData.address,
+                bio: pendingFormData.bio,
+            });
 
             if (!response.error && response.data) {
                 setUser(response.data);
@@ -224,7 +245,7 @@ export function Profile() {
                     Profil Saya
                 </h2>
                 <p className="mt-1 text-muted-foreground">
-                    Kelola informasi profil dan avatar Anda
+                    Kelola informasi profil
                 </p>
             </div>
 
@@ -442,12 +463,106 @@ export function Profile() {
                                     <Input
                                         id="phone"
                                         {...register('phone')}
-                                        disabled
-                                        className="bg-white/5 border-white/10 text-white/60 placeholder:text-white/30 cursor-not-allowed"
+                                        className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:bg-white/15 focus:border-white/30"
                                         placeholder="08xxxxxxxxxx"
                                     />
                                     {errors.phone && (
                                         <p className="text-sm text-red-300">{errors.phone.message}</p>
+                                    )}
+                                </div>
+
+                                {/* Alias Field */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="alias" className="text-white/90 flex items-center gap-2">
+                                        <UserCircle className="h-4 w-4" />
+                                        Nama Panggilan
+                                    </Label>
+                                    <Input
+                                        id="alias"
+                                        {...register('alias')}
+                                        className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:bg-white/15 focus:border-white/30"
+                                        placeholder="Nama panggilan"
+                                    />
+                                    {errors.alias && (
+                                        <p className="text-sm text-red-300">{errors.alias.message}</p>
+                                    )}
+                                </div>
+
+                                {/* Gender Field */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="gender" className="text-white/90 flex items-center gap-2">
+                                        <User className="h-4 w-4" />
+                                        Jenis Kelamin
+                                    </Label>
+                                    <Controller
+                                        name="gender"
+                                        control={control}
+                                        render={({ field }) => (
+                                            <Select value={field.value} onValueChange={field.onChange}>
+                                                <SelectTrigger className="bg-white/10 border-white/20 text-white focus:bg-white/15 focus:border-white/30">
+                                                    <SelectValue placeholder="Pilih jenis kelamin" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="male">Laki-laki</SelectItem>
+                                                    <SelectItem value="female">Perempuan</SelectItem>
+                                                </SelectContent>
+                                            </Select>
+                                        )}
+                                    />
+                                    {errors.gender && (
+                                        <p className="text-sm text-red-300">{errors.gender.message}</p>
+                                    )}
+                                </div>
+
+                                {/* Date of Birth Field */}
+                                <div className="space-y-2">
+                                    <Label htmlFor="date_of_birth" className="text-white/90 flex items-center gap-2">
+                                        <Calendar className="h-4 w-4" />
+                                        Tanggal Lahir
+                                    </Label>
+                                    <Input
+                                        id="date_of_birth"
+                                        type="date"
+                                        {...register('date_of_birth')}
+                                        className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:bg-white/15 focus:border-white/30"
+                                    />
+                                    {errors.date_of_birth && (
+                                        <p className="text-sm text-red-300">{errors.date_of_birth.message}</p>
+                                    )}
+                                </div>
+
+                                {/* Address Field - Full Width */}
+                                <div className="space-y-2 md:col-span-2">
+                                    <Label htmlFor="address" className="text-white/90 flex items-center gap-2">
+                                        <MapPin className="h-4 w-4" />
+                                        Alamat
+                                    </Label>
+                                    <Input
+                                        id="address"
+                                        {...register('address')}
+                                        className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:bg-white/15 focus:border-white/30"
+                                        placeholder="Alamat lengkap"
+                                    />
+                                    {errors.address && (
+                                        <p className="text-sm text-red-300">{errors.address.message}</p>
+                                    )}
+                                </div>
+
+                                {/* Bio Field - Full Width */}
+                                <div className="space-y-2 md:col-span-2">
+                                    <Label htmlFor="bio" className="text-white/90 flex items-center gap-2">
+                                        <FileText className="h-4 w-4" />
+                                        Bio
+                                    </Label>
+                                    <Textarea
+                                        id="bio"
+                                        {...register('bio')}
+                                        className="bg-white/10 border-white/20 text-white placeholder:text-white/40 focus:bg-white/15 focus:border-white/30 min-h-[100px]"
+                                        placeholder="Ceritakan sedikit tentang diri Anda"
+                                        maxLength={1000}
+                                    />
+                                    {errors.bio && (
+                                        <p className="text-sm text-red-300">{errors.bio.message}</p>
                                     )}
                                 </div>
                             </div>

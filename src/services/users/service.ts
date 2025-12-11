@@ -23,6 +23,11 @@ class UsersService extends BaseService {
     if (data.name) formData.append('name', data.name);
     if (data.email) formData.append('email', data.email);
     if (data.phone) formData.append('phone', data.phone);
+    if (data.alias) formData.append('alias', data.alias);
+    if (data.gender) formData.append('gender', data.gender);
+    if (data.date_of_birth) formData.append('date_of_birth', data.date_of_birth);
+    if (data.address) formData.append('address', data.address);
+    if (data.bio) formData.append('bio', data.bio);
 
     return this.patch<ApiResponse<UserResponse>>('/me', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
