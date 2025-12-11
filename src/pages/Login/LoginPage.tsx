@@ -1,5 +1,5 @@
-import LoginBranding from './LoginBranding';
-import LoginForm from './LoginForm';
+import { LoginBranding, LoginForm } from "@/components/login";
+
 
 const LoginPage: React.FC = () => {
   return (
@@ -17,12 +17,11 @@ const LoginPage: React.FC = () => {
         <div className="absolute bottom-20 right-10 w-20 h-20 bg-secondary/20 rounded-full" />
       </div>
 
-      <div className="hidden lg:flex lg:w-[55%] bg-primary relative overflow-hidden">
+      <div className="hidden lg:flex lg:w-[80%] bg-primary relative overflow-hidden pb-16">
         <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')] opacity-[0.08]" />
         <div className="absolute top-0 right-0 w-96 h-96 bg-tertiary/10 rounded-full -translate-y-1/2 translate-x-1/2" />
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-secondary/15 rounded-full translate-y-1/2 -translate-x-1/2" />
         <div className="absolute top-1/2 right-20 w-40 h-40 bg-white/5 rounded-full" />
-        {/* <div className="absolute bottom-1/4 right-1/3 w-24 h-24 bg-tertiary/10 rounded-full" /> */}
         <LoginBranding className="w-full text-white relative z-10" />
       </div>
 
