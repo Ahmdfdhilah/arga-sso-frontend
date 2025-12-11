@@ -10,7 +10,6 @@ import { cn } from '@/lib/utils';
 import { useLoginEmail } from '@/hooks/tanstackHooks';
 import { authService } from '@/services/auth';
 import logoKecil from '@/assets/logo-lightmode-kecil.png';
-import { API_BASE_URL } from '@/lib/constants';
 
 interface LoginFormProps {
   className?: string;
@@ -42,7 +41,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ className }) => {
   const handleGoogleLogin = async () => {
     setGoogleLoading(true);
     try {
-      const redirectUri = `${API_BASE_URL}/auth/login/google/callback`;
+      // Redirect ke frontend callback, bukan backend
+      const redirectUri = `${window.location.origin}/auth/google/callback`;
       const response = await authService.getGoogleAuthUrl(redirectUri);
       window.location.href = response.data.auth_url;
     } catch {

@@ -34,12 +34,14 @@ class AuthService extends BaseService {
 
   async googleCallback(
     code: string,
+    redirectUri: string,
     clientId?: string,
     fcmToken?: string,
     deviceInfo?: string
   ): Promise<ApiResponse<LoginResponse>> {
     return this.get<ApiResponse<LoginResponse>>('/login/google/callback', {
       code,
+      redirect_uri: redirectUri,
       client_id: clientId,
       fcm_token: fcmToken,
       device_info: deviceInfo,

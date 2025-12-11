@@ -7,6 +7,7 @@ import DashboardPage from '@/pages/Dashboard';
 import ProfilePage from '@/pages/Profile';
 import UsersPage from '@/pages/Users';
 import ApplicationsPage from '@/pages/Applications';
+import { GoogleCallback } from '@/pages/Auth';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
@@ -34,6 +35,7 @@ function App() {
     <Routes>
       <Route path="/login" element={isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />} />
       <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
+      <Route path="/auth/google/callback" element={<GoogleCallback />} />
       <Route
         path="/dashboard"
         element={
