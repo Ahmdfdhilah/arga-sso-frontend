@@ -1,7 +1,6 @@
-import { ExternalLink, Clock, CheckCircle, XCircle, ImageIcon } from 'lucide-react';
+import { ExternalLink, Clock, ImageIcon } from 'lucide-react';
 import type { AllowedAppResponse } from '@/services/applications/types';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 
 interface ApplicationCardProps {
     app: AllowedAppResponse;
@@ -34,16 +33,7 @@ export function ApplicationCard({ app }: ApplicationCardProps) {
                     </div>
                 )}
 
-                {/* Status Badge */}
-                <div className="absolute right-3 top-3">
-                    <Badge variant={app.is_active ? "default" : "secondary"} className="shadow-lg backdrop-blur-sm">
-                        {app.is_active ? (
-                            <><CheckCircle className="mr-1 h-3 w-3" /> Aktif</>
-                        ) : (
-                            <><XCircle className="mr-1 h-3 w-3" /> Nonaktif</>
-                        )}
-                    </Badge>
-                </div>
+                
             </div>
 
             {/* Card Content */}
