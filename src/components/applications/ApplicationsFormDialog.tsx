@@ -8,7 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
-import { Loader2, Upload, X } from 'lucide-react';
+import { Loader2, Upload } from 'lucide-react';
 import type { ApplicationListItemResponse } from '@/services/applications/types';
 
 const applicationFormSchema = z.object({
@@ -104,16 +104,6 @@ export function ApplicationsFormDialog({
         }
     };
 
-    const removeImage = (type: 'img' | 'icon') => {
-        if (type === 'img') {
-            setImgPreview(null);
-            imgFileRef.current = null;
-        } else {
-            setIconPreview(null);
-            iconFileRef.current = null;
-        }
-    };
-
     const handleFormSubmit = (data: ApplicationFormData) => {
         const formData = new FormData();
 
@@ -192,22 +182,13 @@ export function ApplicationsFormDialog({
                                 {imgPreview && (
                                     <div className="relative">
                                         <img src={imgPreview} alt="Preview" className="w-full h-32 object-cover rounded" />
-                                        <Button
-                                            type="button"
-                                            variant="destructive"
-                                            size="icon"
-                                            className="absolute top-1 right-1 h-6 w-6"
-                                            onClick={() => removeImage('img')}
-                                        >
-                                            <X className="h-4 w-4" />
-                                        </Button>
                                     </div>
                                 )}
                                 <div>
                                     <label htmlFor="img-upload" className="cursor-pointer">
                                         <div className="flex items-center gap-2 border rounded px-3 py-2 hover:bg-accent">
                                             <Upload className="h-4 w-4" />
-                                            <span className="text-sm">Upload Image</span>
+                                            <span className="text-sm">{imgPreview ? 'Re-upload Image' : 'Upload Image'}</span>
                                         </div>
                                     </label>
                                     <input
@@ -227,22 +208,13 @@ export function ApplicationsFormDialog({
                                 {iconPreview && (
                                     <div className="relative w-32">
                                         <img src={iconPreview} alt="Icon Preview" className="w-32 h-32 object-cover rounded" />
-                                        <Button
-                                            type="button"
-                                            variant="destructive"
-                                            size="icon"
-                                            className="absolute top-1 right-1 h-6 w-6"
-                                            onClick={() => removeImage('icon')}
-                                        >
-                                            <X className="h-4 w-4" />
-                                        </Button>
                                     </div>
                                 )}
                                 <div>
                                     <label htmlFor="icon-upload" className="cursor-pointer">
                                         <div className="flex items-center gap-2 border rounded px-3 py-2 hover:bg-accent">
                                             <Upload className="h-4 w-4" />
-                                            <span className="text-sm">Upload Icon</span>
+                                            <span className="text-sm">{iconPreview ? 'Re-upload Icon' : 'Upload Icon'}</span>
                                         </div>
                                     </label>
                                     <input

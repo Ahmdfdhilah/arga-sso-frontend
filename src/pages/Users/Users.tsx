@@ -4,7 +4,6 @@ import { toast } from 'sonner';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { MainLayout } from '@/components/layouts';
 import FilterCard from '@/components/common/FilterCard';
 import Pagination from '@/components/common/PaginationCard';
 import { ConfirmDialog } from '@/components/common/ConfirmDialog';
@@ -178,7 +177,7 @@ export function Users() {
     };
 
     return (
-        <MainLayout>
+        <>
             <div className="space-y-6">
                 <div className="flex items-center justify-between">
                     <div>
@@ -389,7 +388,7 @@ export function Users() {
                     cancelText="Batal"
                 />
             </div>
-        </MainLayout>
+        </>
     );
 }
 

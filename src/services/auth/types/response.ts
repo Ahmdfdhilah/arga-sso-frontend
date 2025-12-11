@@ -9,6 +9,7 @@ export interface UserData {
   role: string;
   name?: string;
   email?: string;
+  avatar_url?: string;
   allowed_apps: AllowedApp[];
 }
 

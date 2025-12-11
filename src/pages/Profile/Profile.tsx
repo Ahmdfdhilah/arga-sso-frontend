@@ -4,7 +4,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { Loader2, AlertCircle, User, Mail, Phone, Camera, Eye, UserCircle, Calendar, MapPin, FileText } from 'lucide-react';
 import { toast } from 'sonner';
-import { MainLayout } from '@/components/layouts';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -234,11 +233,7 @@ export function Profile() {
     }
 
     return (
-        <MainLayout
-            userName={user?.name}
-            userEmail={user?.email}
-            userAvatar={user?.avatar_url}
-        >
+        < >
             {/* Header */}
             <div className="mb-6">
                 <h2 className="text-3xl font-bold text-foreground">
@@ -588,6 +583,6 @@ export function Profile() {
                     </div>
                 </div>
             </form>
-        </MainLayout>
+        </>
     );
 }
