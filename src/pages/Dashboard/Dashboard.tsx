@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Loader2, AlertCircle, Calendar, Clock } from 'lucide-react';
-import { MainLayout } from '@/components/layouts';
 import { ApplicationCard } from '@/components/dashboard/ApplicationCard';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { usersService } from '@/services/users';
@@ -76,18 +75,14 @@ export function Dashboard() {
     }
 
     return (
-        <MainLayout
-            userName={user?.name}
-            userEmail={user?.email}
-            userAvatar={user?.avatar_url}
-        >
+        <>
             {/* Welcome Message */}
             <div className="mb-6">
                 <h2 className="text-3xl font-bold text-foreground">
                     Selamat Datang, {user?.name || 'User'}!
                 </h2>
                 <p className="mt-1 text-muted-foreground">
-                   Di Portal SSO PT. Arga Bumi Indonesia
+                    Di Portal SSO PT. Arga Bumi Indonesia
                 </p>
             </div>
 
@@ -160,6 +155,8 @@ export function Dashboard() {
                 </div>
             </div>
 
+
+
             {/* Applications Grid */}
             <div>
                 <div className="mb-6 flex items-center justify-between">
@@ -183,6 +180,57 @@ export function Dashboard() {
                     </div>
                 )}
             </div>
-        </MainLayout>
+
+            {/* Quick Access for Admin/Superadmin */}
+            {(user?.role === 'superadmin' || user?.role === 'admin') && (
+                <div className="my-8">
+                    <div className="mb-4">
+                        <h3 className="text-xl font-semibold text-foreground">Quick Access</h3>
+                        <p className="text-sm text-muted-foreground">Akses cepat untuk manajemen sistem</p>
+                    </div>
+                    <div className="grid gap-4 md:grid-cols-2">
+                        {/* User Management Card */}
+                        <a
+                            href="/users"
+                            className="glass-card group relative overflow-hidden rounded-2xl bg-gradient-to-br from-primary to-primary/80 p-6 transition-all hover:shadow-lg hover:scale-[1.02]"
+                        >
+                            <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')] opacity-[0.08]" />
+                            <div className="absolute -top-10 -right-10 h-32 w-32 rounded-full bg-white/10" />
+                            <div className="relative z-10 flex items-center gap-4">
+                                <div className="rounded-xl bg-white/20 p-3 transition-transform group-hover:scale-110">
+                                    <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="text-2xl font-bold text-white">Manajemen User</p>
+                                    <p className="text-sm text-white/70">Kelola pengguna sistem</p>
+                                </div>
+                            </div>
+                        </a>
+
+                        {/* Application Management Card */}
+                        <a
+                            href="/applications"
+                            className="glass-card group relative overflow-hidden rounded-2xl bg-gradient-to-br from-secondary to-secondary/80 p-6 transition-all hover:shadow-lg hover:scale-[1.02]"
+                        >
+                            <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg viewBox=%220 0 200 200%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cfilter id=%22noiseFilter%22%3E%3CfeTurbulence type=%22fractalNoise%22 baseFrequency=%220.65%22 numOctaves=%223%22 stitchTiles=%22stitch%22/%3E%3C/filter%3E%3Crect width=%22100%25%22 height=%22100%25%22 filter=%22url(%23noiseFilter)%22/%3E%3C/svg%3E')] opacity-[0.08]" />
+                            <div className="absolute top-4 right-6 h-28 w-28 rounded-full bg-white/10" />
+                            <div className="relative z-10 flex items-center gap-4">
+                                <div className="rounded-xl bg-white/20 p-3 transition-transform group-hover:scale-110">
+                                    <svg className="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                                    </svg>
+                                </div>
+                                <div>
+                                    <p className="text-2xl font-bold text-white">Manajemen Aplikasi</p>
+                                    <p className="text-sm text-white/70">Kelola aplikasi terdaftar</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            )}
+        </>
     );
 }

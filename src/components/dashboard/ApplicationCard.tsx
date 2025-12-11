@@ -1,18 +1,18 @@
 import { ExternalLink, Clock, ImageIcon } from 'lucide-react';
 import type { AllowedAppResponse } from '@/services/applications/types';
-import { Button } from '@/components/ui/button';
 
 interface ApplicationCardProps {
     app: AllowedAppResponse;
 }
 
 export function ApplicationCard({ app }: ApplicationCardProps) {
-    const handleLaunch = () => {
-        window.open(app.base_url, '_blank', 'noopener,noreferrer');
-    };
-
     return (
-        <div className="glass-card group relative overflow-hidden rounded-2xl bg-gradient-to-br from-card via-card to-card/80 shadow-lg transition-all duration-300 hover:shadow-2xl hover-lift">
+        <a
+            href={app.base_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="glass-card group relative block overflow-hidden rounded-2xl bg-gradient-to-br from-card via-card to-card/80 shadow-lg transition-all duration-300 hover:shadow-2xl hover-lift"
+        >
             <div className="relative h-40 w-full overflow-hidden bg-gradient-to-br from-primary/10 via-secondary/10 to-tertiary/10">
                 {app.img_url ? (
                     <>
@@ -33,7 +33,7 @@ export function ApplicationCard({ app }: ApplicationCardProps) {
                     </div>
                 )}
 
-                
+
             </div>
 
             {/* Card Content */}
@@ -85,21 +85,15 @@ export function ApplicationCard({ app }: ApplicationCardProps) {
                         <Clock className="h-3 w-3" />
                         <span>Klik untuk membuka</span>
                     </div>
+                    <div className="flex items-center gap-1">
+                        <ExternalLink className="h-3 w-3" />
+                        <span>Tab Baru</span>
+                    </div>
                 </div>
-
-                {/* Launch Button */}
-                <Button
-                    onClick={handleLaunch}
-                    className="w-full gap-2 font-semibold shadow-lg transition-all duration-300 hover:shadow-xl"
-                    size="sm"
-                >
-                    Buka Aplikasi
-                    <ExternalLink className="h-4 w-4" />
-                </Button>
             </div>
 
             {/* Hover Glow Effect */}
             <div className="absolute inset-0 -z-10 rounded-2xl bg-gradient-to-br from-primary/20 via-secondary/20 to-tertiary/20 opacity-0 blur-xl transition-opacity duration-300 group-hover:opacity-100" />
-        </div>
+        </a>
     );
 }

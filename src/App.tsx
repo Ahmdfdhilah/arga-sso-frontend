@@ -1,20 +1,30 @@
 import { Routes, Route, Navigate } from 'react-router';
 import { useAuthStore } from '@/stores/authStore';
+import { MainLayout } from '@/components/layouts';
 import LoginPage from '@/pages/Login';
 import PrivacyPolicyPage from '@/pages/PrivacyPolicy';
 import DashboardPage from '@/pages/Dashboard';
 import ProfilePage from '@/pages/Profile';
 import UsersPage from '@/pages/Users';
+import ApplicationsPage from '@/pages/Applications';
 
-// Protected Route Component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const user = useAuthStore((state) => state.user);
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
   }
 
-  return <>{children}</>;
+  return (
+    <MainLayout
+      userName={user?.name}
+      userEmail={user?.email}
+      userAvatar={user?.avatar_url}
+    >
+      {children}
+    </MainLayout>
+  );
 }
 
 function App() {
@@ -45,6 +55,14 @@ function App() {
         element={
           <ProtectedRoute>
             <UsersPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/applications"
+        element={
+          <ProtectedRoute>
+            <ApplicationsPage />
           </ProtectedRoute>
         }
       />

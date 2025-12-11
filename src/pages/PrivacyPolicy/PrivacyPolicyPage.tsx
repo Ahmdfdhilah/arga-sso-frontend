@@ -133,14 +133,14 @@ const PrivacyPolicyPage: React.FC = () => {
             className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
           >
             <HiArrowLeft className="h-5 w-5" />
-            <span className="text-sm font-medium">Kembali ke Login</span>
+         
           </Link>
           <img src={logoAbi} alt="Arga Bumi Indonesia" className="h-8 w-auto" />
         </div>
       </header>
 
       <main className="max-w-4xl mx-auto px-6 py-12">
-        <div className="mb-12">
+        <div className="mb-12"> 
           <h1 className="text-3xl lg:text-4xl font-bold text-foreground mb-4">
             Kebijakan Privasi
           </h1>
