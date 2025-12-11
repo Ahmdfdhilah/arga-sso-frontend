@@ -7,6 +7,7 @@ import { usersService } from '@/services/users';
 import { applicationsService } from '@/services/applications';
 import type { UserResponse } from '@/services/users/types';
 import type { AllowedAppResponse } from '@/services/applications/types';
+import { getInitials, getDayName, getFormattedDate, getFormattedTime } from '@/utils';
 import logoKecil from '@/assets/logo_abi_lightmode.png';
 
 export function Dashboard() {
@@ -52,33 +53,7 @@ export function Dashboard() {
         }
     };
 
-    const getInitials = (name: string) => {
-        return name
-            .split(' ')
-            .map(n => n[0])
-            .join('')
-            .toUpperCase()
-            .slice(0, 2);
-    };
 
-    const getDayName = () => {
-        const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-        return days[currentTime.getDay()];
-    };
-
-    const getFormattedDate = () => {
-        const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
-            'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-        return `${currentTime.getDate()} ${months[currentTime.getMonth()]} ${currentTime.getFullYear()}`;
-    };
-
-    const getFormattedTime = () => {
-        return currentTime.toLocaleTimeString('id-ID', {
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit'
-        });
-    };
 
     if (isLoading) {
         return (
@@ -147,8 +122,8 @@ export function Dashboard() {
                             </div>
                             <div>
                                 <p className="text-sm text-muted-foreground">Hari Ini</p>
-                                <p className="text-xl font-bold text-foreground">{getDayName()}</p>
-                                <p className="text-sm text-muted-foreground">{getFormattedDate()}</p>
+                                <p className="text-xl font-bold text-foreground">{getDayName(currentTime)}</p>
+                                <p className="text-sm text-muted-foreground">{getFormattedDate(currentTime)}</p>
                             </div>
                         </div>
                     </div>
@@ -183,7 +158,7 @@ export function Dashboard() {
                             </div>
                             <div>
                                 <p className="text-sm text-muted-foreground">Waktu</p>
-                                <p className="text-2xl font-bold font-mono text-foreground">{getFormattedTime()}</p>
+                                <p className="text-2xl font-bold font-mono text-foreground">{getFormattedTime(currentTime)}</p>
                                 <p className="text-sm text-muted-foreground">WIB</p>
                             </div>
                         </div>

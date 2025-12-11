@@ -3,6 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import type { UserResponse } from '@/services/users/types';
 import { Mail, Phone, Calendar, Edit } from 'lucide-react';
+import { getInitials, getRoleBadgeVariant } from '@/utils';
 
 interface UserProfileCardProps {
     user: UserResponse;
@@ -10,26 +11,6 @@ interface UserProfileCardProps {
 }
 
 export function UserProfileCard({ user, onEdit }: UserProfileCardProps) {
-    const getInitials = (name: string) => {
-        return name
-            .split(' ')
-            .map(n => n[0])
-            .join('')
-            .toUpperCase()
-            .slice(0, 2);
-    };
-
-    const getRoleBadgeVariant = (role: string) => {
-        switch (role) {
-            case 'superadmin':
-                return 'destructive';
-            case 'admin':
-                return 'default';
-            default:
-                return 'secondary';
-        }
-    };
-
     const formatDate = (dateString: string) => {
         return new Date(dateString).toLocaleDateString('id-ID', {
             day: 'numeric',

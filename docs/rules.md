@@ -1799,3 +1799,226 @@ Struktur lengkap untuk list page:
 13. ConfirmDialog
 
 Setiap module HARUS mengikuti pattern ini untuk konsistensi.
+
+## UTILITY FUNCTIONS ORGANIZATION
+
+### 1. Prinsip Organisasi Utility Functions
+
+**ATURAN UTAMA:**
+- **TIDAK BOLEH** ada utility functions langsung di dalam components atau pages
+- **General utils** → `src/utils/`
+- **Service-specific utils** → `src/services/[service]/utils.ts`
+
+### 2. General Utils Location: `src/utils/`
+
+Utility functions yang **TIDAK berkaitan dengan service/entity tertentu** harus di `src/utils/`:
+
+**Structure:**
+```
+utils/
+├── errorHandler.ts          # Error handling utilities
+├── user.ts                  # User-related utilities (initials, badges)
+├── date.ts                  # Date/time formatting utilities
+├── string.ts                # String manipulation
+├── validation.ts            # General validation functions
+└── index.ts                 # Barrel exports
+```
+
+**Examples:**
+
+```typescript
+// utils/user.ts
+export function getInitials(name: string): string {
+  return name
+    .split(' ')
+    .map(n => n[0])
+    .join('')
+    .toUpperCase()
+    .slice(0, 2);
+}
+
+export function getRoleBadgeVariant(role: string): 'default' | 'secondary' | 'outline' {
+  switch (role.toLowerCase()) {
+    case 'admin': return 'default';
+    case 'user': return 'secondary';
+    default: return 'outline';
+  }
+}
+
+// utils/date.ts
+export function getDayName(date: Date = new Date()): string {
+  const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+  return days[date.getDay()];
+}
+
+export function getFormattedDate(date: Date = new Date()): string {
+  const months = ['Januari', 'Februari', 'Maret', /*...*/];
+  return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
+}
+```
+
+### 3. Service-Specific Utils: `src/services/[service]/utils.ts`
+
+Utility functions yang **spesifik ke service/entity** harus di folder service tersebut:
+
+**Structure:**
+```
+services/
+├── users/
+│   ├── service.ts
+│   ├── types/
+│   │   ├── request.ts
+│   │   ├── response.ts
+│   │   └── index.ts
+│   ├── utils.ts              # User service utilities
+│   └── index.ts
+├── applications/
+│   ├── service.ts
+│   ├── types/
+│   ├── utils.ts              # Application service utilities
+│   └── index.ts
+```
+
+**Examples:**
+
+```typescript
+// services/users/utils.ts
+import type { UserResponse } from './types';
+
+export function canAccessMenu(user: UserResponse, menuCode: string): boolean {
+  return user.allowed_apps.some(app => app.code === menuCode);
+}
+
+export function getUserFullName(user: UserResponse): string {
+  return `${user.first_name} ${user.last_name}`.trim();
+}
+
+// services/applications/utils.ts
+import type { AllowedAppResponse } from './types';
+
+export function getActiveApplications(apps: AllowedAppResponse[]): AllowedAppResponse[] {
+  return apps.filter(app => app.is_active);
+}
+
+export function sortApplicationsByName(apps: AllowedAppResponse[]): AllowedAppResponse[] {
+  return [...apps].sort((a, b) => a.name.localeCompare(b.name));
+}
+```
+
+### 4. Utils Index Files
+
+**General Utils (`src/utils/index.ts`):**
+
+```typescript
+export * from './errorHandler';
+export * from './user';
+export * from './date';
+export * from './string';
+export * from './validation';
+```
+
+**Service Utils (`src/services/users/index.ts`):**
+
+```typescript
+export * from './service';
+export * as usersUtils from './utils';
+export * from './types';
+```
+
+### 5. Import Patterns
+
+**From General Utils:**
+
+```typescript
+// Component/Page
+import { getInitials, getDayName, getFormattedDate } from '@/utils';
+// or specific import
+import { getInitials } from '@/utils/user';
+import { getDayName } from '@/utils/date';
+```
+
+**From Service Utils:**
+
+```typescript
+// Import dengan namespace
+import { usersUtils } from '@/services/users';
+const fullName = usersUtils.getUserFullName(user);
+
+// Or direct import
+import { getUserFullName } from '@/services/users/utils';
+```
+
+### 6. Decision Tree: Where to Put Utils?
+
+**Tanya diri sendiri:**
+
+1. **Apakah function ini berkaitan dengan data/logic spesifik dari sebuah service?**
+   - **YES** → `services/[service]/utils.ts`
+   - **NO** → Lanjut ke #2
+
+2. **Apakah function ini bisa dipakai di berbagai tempat tanpa tergantung service?**
+   - **YES** → `src/utils/[category].ts`
+   - **NO** → Consider making it a private function in component
+
+**Examples:**
+
+```
+✅ src/utils/user.ts
+  - getInitials() - works with any string
+  - getRoleBadgeVariant() - generic role to variant mapping
+
+✅ src/utils/date.ts
+  - getDayName() - pure date formatting
+  - getFormattedDate() - generic Indonesian date format
+
+✅ services/users/utils.ts
+  - canAccessMenu() - needs UserResponse type
+  - getUserFullName() - specific to User entity
+
+✅ services/applications/utils.ts
+  - getActiveApplications() - filters AllowedAppResponse[]
+  - sortApplicationsByName() - specific application logic
+```
+
+### 7. TIDAK BOLEH:
+
+❌ **Utils di dalam component/page:**
+
+```typescript
+// ❌ SALAH - Jangan di dalam component
+const UserProfile = () => {
+  const getInitials = (name: string) => { /* ... */ };
+  
+  return <div>{getInitials(user.name)}</div>;
+};
+```
+
+❌ **Duplicate utils di multiple files:**
+
+```typescript
+// ❌ SALAH - getInitials ada di 2 tempat
+// Dashboard.tsx
+const getInitials = (name: string) => { /* ... */ };
+
+// UserProfileCard.tsx
+const getInitials = (name: string) => { /* ... */ };
+```
+
+❌ **Service-specific logic di general utils:**
+
+```typescript
+// ❌ SALAH - canAccessMenu butuh UserResponse type
+// utils/user.ts
+export function canAccessMenu(user: UserResponse, code: string) {
+  // This belongs in services/users/utils.ts
+}
+```
+
+### 8. Benefits
+
+✅ **No Duplication** - Single source of truth untuk setiap function
+✅ **Better Organization** - Clear separation of concerns
+✅ **Reusability** - Utils dapat diimport di mana saja
+✅ **Testability** - Mudah untuk write unit tests
+✅ **Maintainability** - Mudah menemukan dan update logic
+✅ **Type Safety** - Service utils punya akses ke service types
