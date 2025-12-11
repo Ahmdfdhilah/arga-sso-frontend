@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 import { useState } from 'react';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { InfoIcon, Filter, ChevronDown, ChevronUp, Search } from 'lucide-react';
+import { Filter, ChevronDown, ChevronUp, Search } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import {
@@ -92,6 +91,21 @@ export function FilterCard({
           {/* Filter Section - Collapsible */}
           {children && isFilterVisible && (
             <div className="p-3 md:p-4">
+              <div className="p-3 mb-4 border border-border bg-muted/50 rounded-lg">
+                <div className="flex gap-2 md:gap-3">
+          
+                  <div className="flex-1 space-y-1">
+                    <h3 className="font-semibold text-primary text-sm md:text-base">
+                      Instruksi Filter
+                    </h3>
+                    <p className="text-muted-foreground text-xs md:text-sm">
+                      Pilih filter untuk menampilkan data yang sesuai. Kombinasikan
+                      beberapa filter untuk hasil yang lebih spesifik.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
               <div className="mb-4 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
                 <div className="flex items-center gap-2">
                   <Filter className="h-4 w-4 text-primary flex-shrink-0" />
@@ -108,21 +122,6 @@ export function FilterCard({
                   </Button>
                 )}
               </div>
-
-              <Alert className="mb-4 border border-border bg-muted/50">
-                <div className="flex  gap-2 md:gap-3">
-                  <InfoIcon className="h-5 w-5 text-primary flex-shrink-0" />
-                  <div className="flex-1 space-y-1">
-                    <AlertTitle className="font-semibold text-primary text-sm md:text-base">
-                      Instruksi Filter
-                    </AlertTitle>
-                    <AlertDescription className="text-muted-foreground text-xs md:text-sm">
-                      Pilih filter untuk menampilkan data yang sesuai. Kombinasikan
-                      beberapa filter untuk hasil yang lebih spesifik.
-                    </AlertDescription>
-                  </div>
-                </div>
-              </Alert>
 
               <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
                 {children}

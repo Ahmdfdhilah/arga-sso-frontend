@@ -64,6 +64,10 @@ export function Header({ userName, userEmail, userAvatar }: HeaderProps) {
                                 <User className="mr-2 h-4 w-4" />
                                 <span>Profil Saya</span>
                             </DropdownMenuItem>
+                            <DropdownMenuItem onClick={() => navigate('/users')}>
+                                <User className="mr-2 h-4 w-4" />
+                                <span>Manajemen User</span>
+                            </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => clearAuth()}>
                                 <LogOut className="mr-2 h-4 w-4" />
                                 <span>Keluar</span>

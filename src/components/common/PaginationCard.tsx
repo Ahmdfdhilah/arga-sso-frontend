@@ -92,20 +92,21 @@ const Pagination: React.FC<PaginationProps> = ({
       <div className="p-4 border border-secondary rounded-md bg-primary text-secondary">
         <div className="flex flex-col sm:flex-row justify-between items-center">
           <div className="flex items-center space-x-2 mb-4 sm:mb-0">
-            <span className="text-sm text-secondary">
-              Showing {startItem} - {endItem} of {totalItems} entries
+            <span className="text-sm text-primary-foreground">
+              Menampilkan {startItem} - {endItem} dari {totalItems} total
             </span>
             <Select
               value={itemsPerPage.toString()}
               onValueChange={onItemsPerPageChange}
             >
-              <SelectTrigger className="w-20 h-8 border-secondary">
+              <SelectTrigger className="w-20 h-8 bg-primary text-primary-foreground">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
                 {[20, 50, 100, 250].map((size) => (
                   <SelectItem
                     key={size}
+                    
                     value={size.toString()}
                   >
                     {size}
@@ -134,8 +135,8 @@ const Pagination: React.FC<PaginationProps> = ({
                   size="sm"
                   onClick={() => onPageChange(page)}
                   className={`h-8 w-8 p-0 ${currentPage === page
-                    ? "bg-primary hover:bg-primary/50 border-secondary text-secondary"
-                    : "bg-secondary border-primary hover:bg-secondary/50 text-primary"
+                    ? "bg-primary hover:bg-primary/50 border-secondary text-primary-foreground"
+                    : "bg-secondary border-primary hover:bg-secondary/50 text-primary-foreground"
                     }`}
                 >
                   {page}
@@ -143,7 +144,7 @@ const Pagination: React.FC<PaginationProps> = ({
               ) : (
                 <span
                   key={index}
-                  className="mx-1 text-secondary"
+                  className="mx-1 text-primary-foreground"
                 >
                   ...
                 </span>

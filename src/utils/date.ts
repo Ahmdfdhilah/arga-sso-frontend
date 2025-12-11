@@ -13,13 +13,20 @@ export function getDayName(date: Date = new Date()): string {
  * @param date - Date object
  * @returns Formatted date string (e.g., "11 Desember 2025")
  */
-export function getFormattedDate(date: Date = new Date()): string {
+export function getFormattedDate(input: string | Date = new Date()): string {
     const months = [
         'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
         'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'
     ];
+    const date = typeof input === "string" ? new Date(input) : input;
+
+    if (isNaN(date.getTime())) {
+        return "-"; 
+    }
+
     return `${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
 }
+
 
 /**
  * Format time in Indonesian locale (HH:MM:SS)

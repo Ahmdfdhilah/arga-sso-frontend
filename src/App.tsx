@@ -4,6 +4,7 @@ import LoginPage from '@/pages/Login';
 import PrivacyPolicyPage from '@/pages/PrivacyPolicy';
 import DashboardPage from '@/pages/Dashboard';
 import ProfilePage from '@/pages/Profile';
+import UsersPage from '@/pages/Users';
 
 // Protected Route Component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -36,6 +37,14 @@ function App() {
         element={
           <ProtectedRoute>
             <ProfilePage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/users"
+        element={
+          <ProtectedRoute>
+            <UsersPage />
           </ProtectedRoute>
         }
       />
