@@ -3,6 +3,7 @@ import { useAuthStore } from '@/stores/authStore';
 import LoginPage from '@/pages/Login';
 import PrivacyPolicyPage from '@/pages/PrivacyPolicy';
 import DashboardPage from '@/pages/Dashboard';
+import ProfilePage from '@/pages/Profile';
 
 // Protected Route Component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -27,6 +28,14 @@ function App() {
         element={
           <ProtectedRoute>
             <DashboardPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <ProfilePage />
           </ProtectedRoute>
         }
       />

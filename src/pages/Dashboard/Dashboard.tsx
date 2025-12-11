@@ -87,7 +87,7 @@ export function Dashboard() {
                     Selamat Datang, {user?.name || 'User'}!
                 </h2>
                 <p className="mt-1 text-muted-foreground">
-                    Kelola akses aplikasi Anda dengan mudah
+                   Di Portal SSO PT. Arga Bumi Indonesia
                 </p>
             </div>
 

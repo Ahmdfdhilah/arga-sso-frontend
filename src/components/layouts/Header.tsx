@@ -1,4 +1,5 @@
-import { LogOut } from 'lucide-react';
+import { LogOut, User } from 'lucide-react';
+import { Link, useNavigate } from 'react-router';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import {
@@ -21,13 +22,18 @@ interface HeaderProps {
 
 export function Header({ userName, userEmail, userAvatar }: HeaderProps) {
     const { clearAuth } = useAuthStore();
+    const navigate = useNavigate();
+
+    const handleProfileClick = () => {
+        navigate('/profile');
+    };
 
     return (
         <header className="sticky top-0 z-50 border-b border-border/40 bg-background/80 backdrop-blur-xl">
             <div className="container mx-auto flex items-center justify-between px-6 py-4">
-                <div className="flex items-center gap-4">
+                <Link to="/" className="flex items-center gap-4">
                     <img src={logoKecil} alt="Arga Bumi Indonesia" className="h-10 w-auto" />
-                </div>
+                </Link>
 
                 <div className="flex flex-1 items-center justify-center px-8">
                 </div>
@@ -54,6 +60,10 @@ export function Header({ userName, userEmail, userAvatar }: HeaderProps) {
                                 </div>
                             </DropdownMenuLabel>
                             <DropdownMenuSeparator />
+                            <DropdownMenuItem onClick={handleProfileClick}>
+                                <User className="mr-2 h-4 w-4" />
+                                <span>Profil Saya</span>
+                            </DropdownMenuItem>
                             <DropdownMenuItem onClick={() => clearAuth()}>
                                 <LogOut className="mr-2 h-4 w-4" />
                                 <span>Keluar</span>

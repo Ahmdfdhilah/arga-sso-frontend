@@ -18,7 +18,15 @@ class UsersService extends BaseService {
   }
 
   async updateMyProfile(data: UserUpdateRequest): Promise<ApiResponse<UserResponse>> {
-    return this.patch<ApiResponse<UserResponse>>('/me', data);
+    // Convert to FormData to match backend Form() expectation
+    const formData = new FormData();
+    if (data.name) formData.append('name', data.name);
+    if (data.email) formData.append('email', data.email);
+    if (data.phone) formData.append('phone', data.phone);
+
+    return this.patch<ApiResponse<UserResponse>>('/me', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
   }
 
   async updateMyProfileWithAvatar(data: FormData): Promise<ApiResponse<UserResponse>> {
