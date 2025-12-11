@@ -19,4 +19,6 @@ export type UserStatus = typeof UserStatus[keyof typeof UserStatus];
 export interface UserFilterParams {
   status?: string;
   role?: string;
+  search?: string;
+  gender?: string;
 }
