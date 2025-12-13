@@ -17,6 +17,7 @@ export interface LoginResponse {
   sso_token: string;
   access_token?: string;
   refresh_token?: string;
+  device_id?: string;
   token_type: string;
   expires_in?: number;
   user: UserData;

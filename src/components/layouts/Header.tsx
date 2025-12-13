@@ -10,9 +10,9 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useAuthStore } from '@/stores/authStore';
 import { getInitials } from '@/utils';
 import logoKecil from '@/assets/logo_abi_lightmode.png';
+import { useLogout } from '@/hooks/tanstackHooks/useAuth';
 
 interface HeaderProps {
     userName?: string;
@@ -21,11 +21,19 @@ interface HeaderProps {
 }
 
 export function Header({ userName, userEmail, userAvatar }: HeaderProps) {
-    const { clearAuth } = useAuthStore();
     const navigate = useNavigate();
+    const { mutate: logout, isPending: isLoggingOut } = useLogout();
 
     const handleProfileClick = () => {
         navigate('/profile');
+    };
+
+    const handleLogout = () => {
+        logout(undefined, {
+            onSuccess: () => {
+                navigate('/login');
+            },
+        });
     };
 
     return (
@@ -64,9 +72,9 @@ export function Header({ userName, userEmail, userAvatar }: HeaderProps) {
                                 <User className="mr-2 h-4 w-4" />
                                 <span>Profil Saya</span>
                             </DropdownMenuItem>
-                            <DropdownMenuItem onClick={() => clearAuth()}>
+                            <DropdownMenuItem onClick={handleLogout} disabled={isLoggingOut}>
                                 <LogOut className="mr-2 h-4 w-4" />
-                                <span>Keluar</span>
+                                <span>{isLoggingOut ? 'Keluar...' : 'Keluar'}</span>
                             </DropdownMenuItem>
                         </DropdownMenuContent>
                     </DropdownMenu>
@@ -75,3 +83,4 @@ export function Header({ userName, userEmail, userAvatar }: HeaderProps) {
         </header>
     );
 }
+

@@ -36,9 +36,10 @@ export class BaseService {
           if (refreshToken && !error.config._retry) {
             error.config._retry = true;
             try {
-              const response = await axios.post(`${API_BASE_URL}/api/v1/auth/refresh`, {
+              // Gunakan API_BASE_URL yang sudah include /api/v1
+              const response = await axios.post(`${API_BASE_URL}/auth/refresh`, {
                 refresh_token: refreshToken,
-                device_id: localStorage.getItem('device_id') || 'web',
+                device_id: localStorage.getItem('arga-sso-device-id') || 'web',
               });
 
               const { access_token, refresh_token } = response.data.data;

@@ -53,14 +53,15 @@ export const useSessions = (
 };
 
 export const useLoginEmail = () => {
-  const { setTokens, setUser } = useAuthStore();
+  const { setTokens, setUser, deviceId } = useAuthStore();
 
   return useMutation({
-    mutationFn: (data: EmailPasswordLoginRequest) => authService.loginWithEmail(data),
+    mutationFn: (data: EmailPasswordLoginRequest) =>
+      authService.loginWithEmail({ ...data, device_id: data.device_id ?? deviceId ?? undefined }),
     onSuccess: (response) => {
-      const { sso_token, access_token, refresh_token, user } = response.data;
+      const { sso_token, access_token, refresh_token, device_id, user } = response.data;
       if (access_token && refresh_token) {
-        setTokens(access_token, refresh_token, sso_token);
+        setTokens(access_token, refresh_token, sso_token, device_id);
       }
       setUser(user);
       toast.success('Login berhasil');
@@ -73,14 +74,15 @@ export const useLoginEmail = () => {
 };
 
 export const useLoginFirebase = () => {
-  const { setTokens, setUser } = useAuthStore();
+  const { setTokens, setUser, deviceId } = useAuthStore();
 
   return useMutation({
-    mutationFn: (data: FirebaseLoginRequest) => authService.loginWithFirebase(data),
+    mutationFn: (data: FirebaseLoginRequest) =>
+      authService.loginWithFirebase({ ...data, device_id: data.device_id ?? deviceId ?? undefined }),
     onSuccess: (response) => {
-      const { sso_token, access_token, refresh_token, user } = response.data;
+      const { sso_token, access_token, refresh_token, device_id, user } = response.data;
       if (access_token && refresh_token) {
-        setTokens(access_token, refresh_token, sso_token);
+        setTokens(access_token, refresh_token, sso_token, device_id);
       }
       setUser(user);
       toast.success('Login berhasil');
@@ -109,14 +111,15 @@ export const useRefreshToken = () => {
 };
 
 export const useExchangeSSO = () => {
-  const { setTokens, setUser } = useAuthStore();
+  const { setTokens, setUser, deviceId } = useAuthStore();
 
   return useMutation({
-    mutationFn: (data: SSOTokenExchangeRequest) => authService.exchangeSSOToken(data),
+    mutationFn: (data: SSOTokenExchangeRequest) =>
+      authService.exchangeSSOToken({ ...data, device_id: data.device_id ?? deviceId ?? undefined }),
     onSuccess: (response) => {
-      const { sso_token, access_token, refresh_token, user } = response.data;
+      const { sso_token, access_token, refresh_token, device_id, user } = response.data;
       if (access_token && refresh_token) {
-        setTokens(access_token, refresh_token, sso_token);
+        setTokens(access_token, refresh_token, sso_token, device_id);
       }
       setUser(user);
       toast.success('Token exchange berhasil');
@@ -133,7 +136,7 @@ export const useLogout = () => {
   const { clearAuth } = useAuthStore();
 
   return useMutation({
-    mutationFn: () => authService.logoutGlobal(),
+    mutationFn: () => authService.logoutSSO(),
     onSuccess: () => {
       clearAuth();
       queryClient.clear();

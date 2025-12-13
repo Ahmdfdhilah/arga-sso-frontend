@@ -68,6 +68,10 @@ class AuthService extends BaseService {
     return this.post<ApiResponse<null>>('/logout');
   }
 
+  async logoutSSO(): Promise<ApiResponse<null>> {
+    return this.post<ApiResponse<null>>('/logout/sso');
+  }
+
   async validateToken(): Promise<ApiResponse<UserData>> {
     return this.post<ApiResponse<UserData>>('/validate');
   }

@@ -2,6 +2,7 @@ export interface EmailPasswordLoginRequest {
   email: string;
   password: string;
   client_id?: string;
+  device_id?: string;
   fcm_token?: string;
   device_info?: Record<string, unknown>;
 }
@@ -9,6 +10,7 @@ export interface EmailPasswordLoginRequest {
 export interface FirebaseLoginRequest {
   firebase_token: string;
   client_id?: string;
+  device_id?: string;
   fcm_token?: string;
   device_info?: Record<string, unknown>;
 }
@@ -21,6 +23,8 @@ export interface RefreshTokenRequest {
 export interface SSOTokenExchangeRequest {
   sso_token: string;
   client_id: string;
+  device_id?: string;
   fcm_token?: string;
   device_info?: Record<string, unknown>;
 }
+
